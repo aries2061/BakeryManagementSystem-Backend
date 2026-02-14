@@ -6,11 +6,16 @@ import {
 } from '@nestjs/common';
 import { put } from '@vercel/blob';
 
+export interface UploadFilePayload {
+  originalname: string;
+  buffer: Buffer;
+}
+
 @Injectable()
 export class UploadsService {
   private readonly logger = new Logger(UploadsService.name);
 
-  async uploadFile(file: Express.Multer.File) {
+  async uploadFile(file: UploadFilePayload) {
     if (!file) {
       throw new BadRequestException('File is required');
     }
