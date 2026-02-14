@@ -19,21 +19,27 @@ import { validateEnv } from './config/env.validation';
 import { LoggingInterceptor } from './logging/logging.interceptor';
 import { GlobalHttpExceptionFilter } from './common/filters/http-exception.filter';
 
+const enableMongoLogging = process.env.ENABLE_MONGODB_LOGGING === 'true';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       validate: validateEnv,
     }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGODB_URI'),
-      }),
-      inject: [ConfigService],
-    }),
+    ...(enableMongoLogging
+      ? [
+          MongooseModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => ({
+              uri: configService.get<string>('MONGODB_URI'),
+            }),
+            inject: [ConfigService],
+          }),
+        ]
+      : []),
     DatabaseModule,
-    LoggingModule,
+    ...(enableMongoLogging ? [LoggingModule] : []),
     AuthModule,
     BranchesModule,
     InventoryModule,
@@ -47,10 +53,14 @@ import { GlobalHttpExceptionFilter } from './common/filters/http-exception.filte
   controllers: [AppController],
   providers: [
     AppService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: LoggingInterceptor,
-    },
+    ...(enableMongoLogging
+      ? [
+          {
+            provide: APP_INTERCEPTOR,
+            useClass: LoggingInterceptor,
+          },
+        ]
+      : []),
     {
       provide: APP_FILTER,
       useClass: GlobalHttpExceptionFilter,

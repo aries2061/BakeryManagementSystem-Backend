@@ -21,7 +21,6 @@ NestJS backend for bakery operations: authentication, branches, inventory, order
 2. Fill all required variables.
 
 Required environment variables:
-- `MONGODB_URI`
 - `SUPABASE_URL`
 - `SUPABASE_KEY`
 - `JWT_SECRET`
@@ -32,6 +31,10 @@ Required environment variables:
 
 MongoDB logging database should use:
 - `BakeryManagementSystem_Log` (for example: `mongodb://localhost:27017/BakeryManagementSystem_Log`)
+
+MongoDB logging toggle:
+- `ENABLE_MONGODB_LOGGING=true` requires `MONGODB_URI`
+- default behavior is disabled when `ENABLE_MONGODB_LOGGING` is not `true`
 
 Optional:
 - `FRONTEND_ORIGINS` (comma-separated origin whitelist)

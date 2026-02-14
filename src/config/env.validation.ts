@@ -1,7 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 
 const requiredKeys = [
-  'MONGODB_URI',
   'SUPABASE_URL',
   'SUPABASE_KEY',
   'JWT_SECRET',
@@ -13,6 +12,8 @@ const requiredKeys = [
 type RequiredKey = (typeof requiredKeys)[number];
 
 export type AppEnv = Record<RequiredKey, string> & {
+  MONGODB_URI?: string;
+  ENABLE_MONGODB_LOGGING?: string;
   PORT?: string;
   FRONTEND_ORIGINS?: string;
   NODE_ENV?: string;
@@ -27,6 +28,16 @@ export function validateEnv(config: Record<string, unknown>): AppEnv {
   if (missing.length > 0) {
     throw new BadRequestException(
       `Missing required environment variables: ${missing.join(', ')}`,
+    );
+  }
+
+  const enableMongoLogging = config.ENABLE_MONGODB_LOGGING === 'true';
+  const mongoUri = config.MONGODB_URI;
+  const hasMongoUri = typeof mongoUri === 'string' && mongoUri.trim().length > 0;
+
+  if (enableMongoLogging && !hasMongoUri) {
+    throw new BadRequestException(
+      'Missing required environment variables: MONGODB_URI (ENABLE_MONGODB_LOGGING=true)',
     );
   }
 
