@@ -3,7 +3,7 @@ import { AppGateway } from './app.gateway';
 
 @Global()
 @Module({
-    providers: [AppGateway],
-    exports: [AppGateway],
+  providers: [AppGateway],
+  exports: [AppGateway],
 })
-export class GatewayModule { }
+export class GatewayModule {}

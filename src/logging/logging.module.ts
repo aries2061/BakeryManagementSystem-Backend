@@ -5,10 +5,12 @@ import { DailyLog, DailyLogSchema } from './logging.schema';
 
 @Global()
 @Module({
-    imports: [
-        MongooseModule.forFeature([{ name: DailyLog.name, schema: DailyLogSchema }]),
-    ],
-    providers: [LoggingService],
-    exports: [LoggingService],
+  imports: [
+    MongooseModule.forFeature([
+      { name: DailyLog.name, schema: DailyLogSchema },
+    ]),
+  ],
+  providers: [LoggingService],
+  exports: [LoggingService],
 })
-export class LoggingModule { }
+export class LoggingModule {}

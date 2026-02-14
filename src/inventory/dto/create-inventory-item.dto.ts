@@ -1,48 +1,91 @@
-import { IsString, IsNotEmpty, IsEnum, IsNumber, IsOptional, IsDateString } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsDateString,
+} from 'class-validator';
 
 export enum ItemType {
-    INGREDIENT = 'INGREDIENT',
-    PRODUCT = 'PRODUCT',
+  INGREDIENT = 'INGREDIENT',
+  PRODUCT = 'PRODUCT',
 }
 
 export class CreateInventoryItemDto {
-    @IsString()
-    @IsOptional()
-    id?: string;
+  @IsString()
+  @IsOptional()
+  id?: string;
 
-    @IsString()
-    @IsNotEmpty()
-    name: string;
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 
-    @IsEnum(ItemType)
-    type: ItemType;
+  @IsEnum(ItemType)
+  type: ItemType;
 
-    @IsNumber()
-    quantity: number;
+  @IsNumber()
+  quantity: number;
 
-    @IsString()
-    @IsNotEmpty()
-    unit: string;
+  @IsString()
+  @IsNotEmpty()
+  unit: string;
 
-    @IsNumber()
-    @IsOptional()
-    price?: number;
+  @IsNumber()
+  @IsOptional()
+  price?: number;
 
-    @IsDateString()
-    @IsOptional()
-    expiry_date?: string;
+  @IsDateString()
+  @IsOptional()
+  expiry_date?: string;
 
-    @IsString()
-    @IsNotEmpty()
-    branch_id: string;
+  @IsString()
+  @IsNotEmpty()
+  branch_id: string;
 
-    @IsNumber()
-    @IsOptional()
-    low_stock_threshold?: number;
+  @IsNumber()
+  @IsOptional()
+  low_stock_threshold?: number;
 
-    @IsString()
-    @IsOptional()
-    vendor?: string;
+  @IsString()
+  @IsOptional()
+  vendor?: string;
 }
 
-export class UpdateInventoryItemDto extends CreateInventoryItemDto { }
+export class UpdateInventoryItemDto {
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @IsEnum(ItemType)
+  @IsOptional()
+  type?: ItemType;
+
+  @IsNumber()
+  @IsOptional()
+  quantity?: number;
+
+  @IsString()
+  @IsOptional()
+  unit?: string;
+
+  @IsNumber()
+  @IsOptional()
+  price?: number;
+
+  @IsDateString()
+  @IsOptional()
+  expiry_date?: string;
+
+  @IsString()
+  @IsOptional()
+  branch_id?: string;
+
+  @IsNumber()
+  @IsOptional()
+  low_stock_threshold?: number;
+
+  @IsString()
+  @IsOptional()
+  vendor?: string;
+}

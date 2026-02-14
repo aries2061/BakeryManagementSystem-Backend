@@ -1,89 +1,103 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { SupabaseService } from '../database/supabase.service';
-import { CreatePromotionDto, UpdatePromotionDto, DiscountType } from './dto/create-promotion.dto';
+import {
+  CreatePromotionDto,
+  UpdatePromotionDto,
+  DiscountType,
+} from './dto/create-promotion.dto';
+import { mapSupabaseError } from '../database/supabase-error.util';
 
 export interface Promotion {
-    id?: string;
-    name: string;
-    description?: string;
-    discount_type: DiscountType;
-    discount_value: number;
-    start_date: string;
-    end_date: string;
-    branch_id?: string;
-    product_id?: string;
-    min_order_amount?: number;
+  id?: string;
+  name: string;
+  description?: string;
+  discount_type: DiscountType;
+  discount_value: number;
+  start_date: string;
+  end_date: string;
+  branch_id?: string;
+  product_id?: string;
+  min_order_amount?: number;
 }
 
 @Injectable()
 export class PromotionsService {
-    private readonly logger = new Logger(PromotionsService.name);
+  private readonly logger = new Logger(PromotionsService.name);
 
-    constructor(private readonly supabaseService: SupabaseService) { }
+  constructor(private readonly supabaseService: SupabaseService) {}
 
-    private get supabase() {
-        return this.supabaseService.getClient();
+  private get supabase() {
+    return this.supabaseService.getClient();
+  }
+
+  async create(createPromotionDto: CreatePromotionDto): Promise<Promotion> {
+    const { data, error } = await this.supabase
+      .from('promotions')
+      .insert([createPromotionDto])
+      .select()
+      .single();
+
+    if (error) {
+      this.logger.error(`Error creating promotion: ${error.message}`);
+      mapSupabaseError(error, 'Create promotion');
+    }
+    return data as Promotion;
+  }
+
+  async findAll(branchId?: string): Promise<Promotion[]> {
+    let query = this.supabase.from('promotions').select('*');
+    // Implement logic to filter by branch (either null branch_id (global) or matching branch_id)
+    if (branchId) {
+      query = query.or(`branch_id.eq.${branchId},branch_id.is.null`);
     }
 
-    async create(createPromotionDto: CreatePromotionDto): Promise<Promotion> {
-        const { data, error } = await this.supabase
-            .from('promotions')
-            .insert([createPromotionDto])
-            .select()
-            .single();
+    const { data, error } = await query;
 
-        if (error) {
-            this.logger.error(`Error creating promotion: ${error.message}`);
-            throw error;
-        }
-        return data as Promotion;
+    if (error) {
+      this.logger.error(`Error fetching promotions: ${error.message}`);
+      mapSupabaseError(error, 'Fetch promotions');
     }
+    return data as Promotion[];
+  }
 
-    async findAll(branchId?: string): Promise<Promotion[]> {
-        let query = this.supabase.from('promotions').select('*');
-        // Implement logic to filter by branch (either null branch_id (global) or matching branch_id)
-        if (branchId) {
-            query = query.or(`branch_id.eq.${branchId},branch_id.is.null`);
-        }
+  async findOne(id: string): Promise<Promotion | null> {
+    const { data, error } = await this.supabase
+      .from('promotions')
+      .select('*')
+      .eq('id', id)
+      .single();
 
-        const { data, error } = await query;
-
-        if (error) {
-            this.logger.error(`Error fetching promotions: ${error.message}`);
-            return [];
-        }
-        return data as Promotion[];
+    if (error) {
+      mapSupabaseError(error, 'Fetch promotion');
     }
+    return data as Promotion;
+  }
 
-    async findOne(id: string): Promise<Promotion | null> {
-        const { data, error } = await this.supabase
-            .from('promotions')
-            .select('*')
-            .eq('id', id)
-            .single();
+  async update(
+    id: string,
+    updatePromotionDto: UpdatePromotionDto,
+  ): Promise<Promotion> {
+    const { data, error } = await this.supabase
+      .from('promotions')
+      .update(updatePromotionDto)
+      .eq('id', id)
+      .select()
+      .single();
 
-        if (error) return null;
-        return data as Promotion;
+    if (error) {
+      mapSupabaseError(error, 'Update promotion');
     }
+    return data as Promotion;
+  }
 
-    async update(id: string, updatePromotionDto: UpdatePromotionDto): Promise<Promotion> {
-        const { data, error } = await this.supabase
-            .from('promotions')
-            .update(updatePromotionDto)
-            .eq('id', id)
-            .select()
-            .single();
+  async remove(id: string): Promise<void> {
+    const { error } = await this.supabase
+      .from('promotions')
+      .delete()
+      .eq('id', id);
 
-        if (error) throw error;
-        return data as Promotion;
+    if (error) {
+      mapSupabaseError(error, 'Delete promotion');
     }
-
-    async remove(id: string): Promise<void> {
-        const { error } = await this.supabase
-            .from('promotions')
-            .delete()
-            .eq('id', id);
-
-        if (error) throw error;
-    }
+  }
 }

@@ -3,7 +3,7 @@ import { UploadsService } from './uploads.service';
 import { UploadsController } from './uploads.controller';
 
 @Module({
-    controllers: [UploadsController],
-    providers: [UploadsService],
+  controllers: [UploadsController],
+  providers: [UploadsService],
 })
-export class UploadsModule { }
+export class UploadsModule {}

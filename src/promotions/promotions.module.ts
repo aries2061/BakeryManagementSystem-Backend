@@ -3,7 +3,7 @@ import { PromotionsService } from './promotions.service';
 import { PromotionsController } from './promotions.controller';
 
 @Module({
-    controllers: [PromotionsController],
-    providers: [PromotionsService],
+  controllers: [PromotionsController],
+  providers: [PromotionsService],
 })
-export class PromotionsModule { }
+export class PromotionsModule {}

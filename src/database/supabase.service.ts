@@ -4,18 +4,18 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 @Injectable()
 export class SupabaseService implements OnModuleInit {
-    private supabase: SupabaseClient;
+  private supabase: SupabaseClient;
 
-    constructor(private configService: ConfigService) { }
+  constructor(private configService: ConfigService) {}
 
-    onModuleInit() {
-        this.supabase = createClient(
-            this.configService.get<string>('SUPABASE_URL') || '',
-            this.configService.get<string>('SUPABASE_KEY') || '',
-        );
-    }
+  onModuleInit() {
+    this.supabase = createClient(
+      this.configService.get<string>('SUPABASE_URL') || '',
+      this.configService.get<string>('SUPABASE_KEY') || '',
+    );
+  }
 
-    getClient(): SupabaseClient {
-        return this.supabase;
-    }
+  getClient(): SupabaseClient {
+    return this.supabase;
+  }
 }

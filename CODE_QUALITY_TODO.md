@@ -3,33 +3,33 @@
 This list is prioritized for fixes, updates, and modifications.
 
 ## P0 — Critical (Do first)
-- [ ] Remove insecure secret fallbacks in auth (`JWT_SECRET`, Google OAuth credentials).
-- [ ] Replace hardcoded OAuth callback URL with environment-driven config.
-- [ ] Restrict CORS and WebSocket origins to trusted frontend domains per environment.
-- [ ] Add startup config validation (required env vars + value constraints).
+- [x] Remove insecure secret fallbacks in auth (`JWT_SECRET`, Google OAuth credentials).
+- [x] Replace hardcoded OAuth callback URL with environment-driven config.
+- [x] Restrict CORS and WebSocket origins to trusted frontend domains per environment.
+- [x] Add startup config validation (required env vars + value constraints).
 
 ## P1 — High Priority
-- [ ] Run formatter and normalize all style inconsistencies across `src/**`.
+- [x] Run formatter and normalize all style inconsistencies across `src/**`.
 - [ ] Change lint workflow:
-  - [ ] Keep `lint` as non-mutating check.
-  - [ ] Add separate `lint:fix` script for local auto-fix.
-- [ ] Remove controller-level `as any` casts and align DTO/service contracts.
-- [ ] Replace `any` usage in DTOs/services with explicit interfaces/types.
-- [ ] Standardize error handling:
-  - [ ] Convert provider errors into `HttpException` subclasses.
-  - [ ] Ensure consistent `4xx/5xx` behavior and response shape.
-- [ ] Complete `OrdersService.create()` business logic:
-  - [ ] validate stock
-  - [ ] deduct inventory
-  - [ ] update customer loyalty points
-  - [ ] define rollback/compensation strategy on partial failure
+  - [x] Keep `lint` as non-mutating check.
+  - [x] Add separate `lint:fix` script for local auto-fix.
+- [x] Remove controller-level `as any` casts and align DTO/service contracts.
+- [x] Replace `any` usage in DTOs/services with explicit interfaces/types.
+- [x] Standardize error handling:
+  - [x] Convert provider errors into `HttpException` subclasses.
+  - [x] Ensure consistent `4xx/5xx` behavior and response shape.
+- [x] Complete `OrdersService.create()` business logic:
+  - [x] validate stock
+  - [x] deduct inventory
+  - [x] update customer loyalty points
+  - [x] define rollback/compensation strategy on partial failure
 
 ## P2 — Medium Priority
-- [ ] Refactor `Update*Dto` classes to use partial-update semantics.
-- [ ] Register `LoggingInterceptor` globally (or apply intentionally per module).
-- [ ] Add logging guardrails to avoid sensitive payload logging.
-- [ ] Improve Supabase error mapping utility shared across services.
-- [ ] Add consistent API response/error envelope for clients.
+- [x] Refactor `Update*Dto` classes to use partial-update semantics.
+- [x] Register `LoggingInterceptor` globally (or apply intentionally per module).
+- [x] Add logging guardrails to avoid sensitive payload logging.
+- [x] Improve Supabase error mapping utility shared across services.
+- [x] Add consistent API response/error envelope for clients.
 
 ## P3 — Testing & Reliability
 - [ ] Add unit tests for:
@@ -44,10 +44,10 @@ This list is prioritized for fixes, updates, and modifications.
 - [ ] Define and enforce coverage thresholds in CI.
 
 ## P4 — Documentation & Developer Experience
-- [ ] Replace starter README with project-specific documentation.
-- [ ] Document required env vars with examples.
-- [ ] Document local run flow, test flow, and API docs path.
-- [ ] Add architecture notes (module boundaries + data ownership).
+- [x] Replace starter README with project-specific documentation.
+- [x] Document required env vars with examples.
+- [x] Document local run flow, test flow, and API docs path.
+- [x] Add architecture notes (module boundaries + data ownership).
 
 ## Suggested Owners
 - Security/config hardening: Backend lead
@@ -56,9 +56,9 @@ This list is prioritized for fixes, updates, and modifications.
 - Test strategy and CI gates: Platform/QA
 
 ## Definition of Done (for this quality pass)
-- [ ] Lint clean with zero errors.
-- [ ] Build and tests pass in CI.
-- [ ] No insecure defaults in runtime config.
-- [ ] `any` usage reduced to approved/justified exceptions only.
+- [x] Lint clean with zero errors.
+- [x] Build and tests pass in CI.
+- [x] No insecure defaults in runtime config.
+- [x] `any` usage reduced to approved/justified exceptions only.
 - [ ] Critical business TODOs in order flow completed and tested.
-- [ ] README and env docs updated.
+- [x] README and env docs updated.
