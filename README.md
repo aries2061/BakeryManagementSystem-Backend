@@ -82,7 +82,7 @@ npm run test:e2e
 1. Create a new **Web Service** and connect this repository.
 2. Render can auto-detect settings from [render.yaml](render.yaml).
 3. If setting manually, use:
-	- Build Command: `npm ci && npm run build`
+	- Build Command: `npm ci --include=dev && npm run build`
 	- Start Command: `npm run start:prod`
 4. Add required environment variables:
 	- `MONGODB_URI`
