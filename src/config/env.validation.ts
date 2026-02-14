@@ -8,7 +8,6 @@ const requiredKeys = [
   'GOOGLE_CLIENT_ID',
   'GOOGLE_CLIENT_SECRET',
   'GOOGLE_CALLBACK_URL',
-  'FRONTEND_URL',
 ] as const;
 
 type RequiredKey = (typeof requiredKeys)[number];
@@ -28,6 +27,19 @@ export function validateEnv(config: Record<string, unknown>): AppEnv {
   if (missing.length > 0) {
     throw new BadRequestException(
       `Missing required environment variables: ${missing.join(', ')}`,
+    );
+  }
+
+  const frontendUrl = config.FRONTEND_URL;
+  const frontendOrigins = config.FRONTEND_ORIGINS;
+  const hasFrontendUrl =
+    typeof frontendUrl === 'string' && frontendUrl.trim().length > 0;
+  const hasFrontendOrigins =
+    typeof frontendOrigins === 'string' && frontendOrigins.trim().length > 0;
+
+  if (!hasFrontendUrl && !hasFrontendOrigins) {
+    throw new BadRequestException(
+      'Missing required environment variables: FRONTEND_URL or FRONTEND_ORIGINS',
     );
   }
 
