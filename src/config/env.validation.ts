@@ -2,7 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 
 const requiredKeys = [
   'SUPABASE_URL',
-  'SUPABASE_KEY',
+  'SUPABASE_SERVICE_ROLE_KEY',
   'JWT_SECRET',
   'GOOGLE_CLIENT_ID',
   'GOOGLE_CLIENT_SECRET',

@@ -22,7 +22,7 @@ NestJS backend for bakery operations: authentication, branches, inventory, order
 
 Required environment variables:
 - `SUPABASE_URL`
-- `SUPABASE_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
 - `JWT_SECRET`
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
@@ -72,7 +72,7 @@ npm run test:e2e
 4. Add all required environment variables in Vercel Project Settings:
 	- `MONGODB_URI`
 	- `SUPABASE_URL`
-	- `SUPABASE_KEY`
+	- `SUPABASE_SERVICE_ROLE_KEY`
 	- `JWT_SECRET`
 	- `GOOGLE_CLIENT_ID`
 	- `GOOGLE_CLIENT_SECRET`
@@ -90,7 +90,7 @@ npm run test:e2e
 4. Add required environment variables:
 	- `MONGODB_URI`
 	- `SUPABASE_URL`
-	- `SUPABASE_KEY`
+	- `SUPABASE_SERVICE_ROLE_KEY`
 	- `JWT_SECRET`
 	- `GOOGLE_CLIENT_ID`
 	- `GOOGLE_CLIENT_SECRET`
