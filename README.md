@@ -79,6 +79,7 @@ npm run test:e2e
 	- `GOOGLE_CALLBACK_URL`
 	- `FRONTEND_URL`
 	- `FRONTEND_ORIGINS`
+	- `ENABLE_SWAGGER=false` (recommended in production)
 5. Redeploy after setting env vars.
 
 ## Deploy on Render

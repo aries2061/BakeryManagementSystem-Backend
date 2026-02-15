@@ -17,6 +17,14 @@ export function configureApplication(app: INestApplication): void {
   });
   app.use(helmet());
 
+  const enableSwagger =
+    process.env.ENABLE_SWAGGER === 'true' ||
+    process.env.NODE_ENV !== 'production';
+
+  if (!enableSwagger) {
+    return;
+  }
+
   const config = new DocumentBuilder()
     .setTitle('Bakery Management System API')
     .setDescription('The Bakery Management System API description')

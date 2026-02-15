@@ -73,6 +73,9 @@
     "tsconfig-paths": "^4.2.0",
     "typescript-eslint": "^8.20.0"
   },
+  "overrides": {
+    "test-exclude": "^7.0.1"
+  },
   "jest": {
     "moduleFileExtensions": [
       "js",
